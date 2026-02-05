@@ -196,6 +196,62 @@ INSERT INTO `tb_project_log` VALUES (1,1,-1,0,'创建项目','2025-12-26 03:20:5
 /*!40000 ALTER TABLE `tb_project_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- ROUTINES FOR AUTOUPDATE
+--
+DELIMITER //
+
+CREATE
+    definer = root@localhost procedure get_project_info_with_status_update()
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE v_project_id INT;
+    DECLARE v_old_status INT;
+    DECLARE cur CURSOR FOR
+        SELECT id, status
+        FROM tb_project_info
+        WHERE deadline < NOW() AND status != 2 AND status != 5;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    -- 打开游标，记录需要更新的项目
+    OPEN cur;
+
+    read_loop: LOOP
+        FETCH cur INTO v_project_id, v_old_status;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- 更新项目状态
+        UPDATE tb_project_info
+        SET status = 2
+        WHERE id = v_project_id;
+
+        -- 记录日志（在存储过程中直接插入，避免触发器）
+        INSERT INTO tb_project_log(
+            project_id,
+            old_status,
+            new_status,
+            reason,
+            approver_id
+        ) VALUES (
+                     v_project_id,
+                     v_old_status,
+                     2,
+                     '超时过期',
+                     1  -- 系统操作
+                 );
+    END LOOP;
+
+    CLOSE cur;
+
+    -- 查询数据
+    SELECT * FROM tb_project_info;
+END//
+
+DELIMITER ;
+
+
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
