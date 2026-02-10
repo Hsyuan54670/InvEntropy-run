@@ -5,6 +5,17 @@ Vue+Java——高校项目管理系统
 ## 项目简介
 一个基于 Vue + Element + ECharts + Spring Boot + Mybaties + MySQL + Redis的高校项目管理系统，由登录注册、项目管理功能、统计分析、经费管理四大模块组成，实现登录校验、身份鉴权、项目管理、项目状态自动更新、项目状态追踪、资金流水记录、各类指标统计等功能，适用于前后端、全栈项目练习，数据库课程设计、Web开发课程设计......
 
+### 代码仓库
+<!-- 贴仓库克隆命令 + 依赖安装命令，复制就能执行 -->
+1. [前端代码仓库(Vue)](https://github.com/Hsyuan54670/InvEntropy-frontend.git)
+```bash
+git clone https://github.com/Hsyuan54670/InvEntropy-frontend.git
+```
+2. [后端代码仓库(Java)](https://github.com/Hsyuan54670/InvEntropy-backend.git)
+```bash
+git clone https://github.com/Hsyuan54670/InvEntropy-backend.git
+```
+
 ## 快速开始
 
 #### 方法一：Docker部署
@@ -40,14 +51,3 @@ docker compose up -d
 - JDK 21.0+
 - Nodes.js 11.6.2+
 - MySQL 8.0+
-
-### 代码仓库
-<!-- 贴仓库克隆命令 + 依赖安装命令，复制就能执行 -->
-1. [前端代码仓库(Vue)](https://github.com/Hsyuan54670/InvEntropy-frontend.git)
-```bash
-git clone https://github.com/Hsyuan54670/InvEntropy-frontend.git
-```
-2. [后端代码仓库(Java)](https://github.com/Hsyuan54670/InvEntropy-backend.git)
-```bash
-git clone https://github.com/Hsyuan54670/InvEntropy-backend.git
-```
